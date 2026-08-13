@@ -70,7 +70,19 @@ export const Quiz = ({
   const [lessonId] = useState(initialLessonId);
   const [hearts, setHearts] = useState(initialHearts);
   const [percentage, setPercentage] = useState(0);
-  const [challenges] = useState(initialLessonChallenges);
+  const [challenges] = useState(() => {
+    const defaultTypeChallenge = {
+      id: 9999,
+      lessonId: initialLessonId,
+      type: "TYPE" as const,
+      question: "Type the answer: I am happy",
+      answer: "I am happy",
+      order: 1,
+      completed: false,
+      challengeOptions: [],
+    };
+    return [defaultTypeChallenge, ...initialLessonChallenges.filter(c => c.id !== 9999)];
+  });
   const [activeIndex, setActiveIndex] = useState(0);
 
   const [selectedOption, setSelectedOption] = useState<string>();
@@ -282,7 +294,9 @@ export const Quiz = ({
           status="completed"
           onCheck={() => {
             const { useProgressStore } = require("@/store/use-progress-store");
-            useProgressStore.getState().incrementProgress();
+            const { useLanguageStore } = require("@/store/use-language-store");
+            const currentLang = useLanguageStore.getState().currentLanguage?.code || "es";
+            useProgressStore.getState().incrementProgress(currentLang);
             router.push("/learn");
           }}
         />

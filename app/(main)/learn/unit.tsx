@@ -2,6 +2,7 @@
 
 import { lessons, units } from "@/db/schema";
 import { useProgressStore } from "@/store/use-progress-store";
+import { useLanguageStore } from "@/store/use-language-store";
 import { UnitBanner } from "./unit-banner";
 import { LessonButton } from "./lesson-button";
 
@@ -28,7 +29,9 @@ export const Unit = ({
   lessons: initialLessons,
   activeLessonPercentage,
 }: Props) => {
-  const { completedCount } = useProgressStore();
+  const { currentLanguage } = useLanguageStore();
+  const { getCompletedCount } = useProgressStore();
+  const completedCount = getCompletedCount(currentLanguage?.code || "es");
 
   // Define clean 7-node path per unit section
   const unitPathNodes = [
@@ -46,7 +49,7 @@ export const Unit = ({
       <UnitBanner title={title} description={description} order={order} />
       <div className="relative flex flex-col items-center overflow-hidden px-6 pb-12 pt-6 bg-[#131f24]">
         {unitPathNodes.map((node, index) => {
-          // Dynamic step-by-step progress unlocking:
+          // Dynamic language-wise step-by-step progress unlocking:
           // Unit 1: Nodes 0..completedCount-1 are Completed (✓), Node completedCount is Active (👑 START)
           let isCompleted = false;
           let isCurrent = false;

@@ -44,7 +44,7 @@ export const Sidebar = ({ className }: Props) => {
         />
         <SidebarItem 
           label="SOUNDS" 
-          href="/courses"
+          href="/sounds"
           iconSrc="/learn.svg"
         />
         <SidebarItem 

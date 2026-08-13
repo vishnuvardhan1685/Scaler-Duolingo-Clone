@@ -24,7 +24,8 @@ export const UserProgress = ({
   hasActiveSubscription
 }: Props) => {
   const { currentLanguage, setLanguage } = useLanguageStore();
-  const { xp } = useProgressStore();
+  const { getXp } = useProgressStore();
+  const currentXp = getXp(currentLanguage?.code || "es");
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   return (
@@ -94,7 +95,7 @@ export const UserProgress = ({
       <Link href="/shop">
         <Button variant="ghost" className="text-[#1cb0f6] hover:bg-[#202f36] font-bold text-sm px-2 gap-x-2">
           <Image src="/points.svg" height={22} width={22} alt="Gems" className="hue-rotate-180" />
-          <span>{xp || points || 150}</span>
+          <span>{currentXp}</span>
         </Button>
       </Link>
       <Link href="/shop">
