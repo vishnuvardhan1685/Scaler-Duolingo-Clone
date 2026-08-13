@@ -8,7 +8,7 @@ import {
   ClerkLoaded,
   UserButton,
 } from "@clerk/nextjs";
-import { Loader, MoreHorizontal, Settings, HelpCircle, LogOut, Globe, ShieldAlert } from "lucide-react";
+import { Loader, MoreHorizontal, Settings, HelpCircle, LogOut, Globe } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { SidebarItem } from "./sidebar-item";
@@ -43,7 +43,7 @@ export const Sidebar = ({ className }: Props) => {
           iconSrc="/learn.svg"
         />
         <SidebarItem 
-          label="LETTERS" 
+          label="SOUNDS" 
           href="/courses"
           iconSrc="/learn.svg"
         />
@@ -68,7 +68,7 @@ export const Sidebar = ({ className }: Props) => {
           iconSrc="/mascot.svg"
         />
 
-        {/* MORE Button with Popover Popup matching Photo 5 */}
+        {/* MORE Button with Popover Popup matching Screenshot 5 */}
         <div className="relative">
           <button
             onClick={() => setMoreOpen(!moreOpen)}
@@ -120,7 +120,7 @@ export const Sidebar = ({ className }: Props) => {
                 HELP
               </Link>
               <Link
-                href="/"
+                href="/learn"
                 onClick={() => setMoreOpen(false)}
                 className="flex items-center gap-x-3 p-3 rounded-2xl hover:bg-[#202f36] text-[#1cb0f6] font-extrabold text-xs uppercase tracking-wider"
               >

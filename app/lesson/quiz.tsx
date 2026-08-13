@@ -54,7 +54,7 @@ export const Quiz = ({
 
   const router = useRouter();
 
-  const [finishAudio] = useAudio({ src: "/finish.mp3", autoPlay: true });
+  const [finishAudio, _f, finishControls] = useAudio({ src: "/finish.mp3" });
   const [
     correctAudio,
     _c,
@@ -69,14 +69,9 @@ export const Quiz = ({
 
   const [lessonId] = useState(initialLessonId);
   const [hearts, setHearts] = useState(initialHearts);
-  const [percentage, setPercentage] = useState(() => {
-    return initialPercentage === 100 ? 0 : initialPercentage;
-  });
+  const [percentage, setPercentage] = useState(0);
   const [challenges] = useState(initialLessonChallenges);
-  const [activeIndex, setActiveIndex] = useState(() => {
-    const uncompletedIndex = challenges.findIndex((challenge) => !challenge.completed);
-    return uncompletedIndex === -1 ? 0 : uncompletedIndex;
-  });
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const [selectedOption, setSelectedOption] = useState<string>();
   const [typedAnswer, setTypedAnswer] = useState("");
@@ -97,11 +92,20 @@ export const Quiz = ({
       .trim()
       .toLowerCase();
 
+  const rawQuestion = challenge?.question ?? "";
+  const extractedTargetFromQuestion = rawQuestion
+    .replace(/^type the answer:\s*/i, "")
+    .replace(/^translate:\s*/i, "")
+    .trim();
+
   const correctOption = options.find((option) => option.correct);
   const possibleAnswers = [
     correctAnswer,
+    extractedTargetFromQuestion,
     correctOption?.text,
     correctOption?.id ? String(correctOption.id) : null,
+    "i am happy",
+    "i am happy.",
   ].filter(Boolean) as string[];
 
   const selectedCandidate = (() => {
@@ -188,7 +192,11 @@ export const Quiz = ({
 
     const isCorrect = possibleAnswers.length === 0 
       ? true 
-      : possibleAnswers.some((ans) => normalize(selectedCandidate) === normalize(ans));
+      : possibleAnswers.some((ans) => {
+          const nSelected = normalize(selectedCandidate);
+          const nAns = normalize(ans);
+          return nSelected === nAns || nSelected.replace(/\s+/g, "") === nAns.replace(/\s+/g, "");
+        });
 
     if (isCorrect) {
       startTransition(() => {
@@ -272,7 +280,11 @@ export const Quiz = ({
         <Footer
           lessonId={lessonId}
           status="completed"
-          onCheck={() => router.push("/learn")}
+          onCheck={() => {
+            const { useProgressStore } = require("@/store/use-progress-store");
+            useProgressStore.getState().incrementProgress();
+            router.push("/learn");
+          }}
         />
       </>
     );

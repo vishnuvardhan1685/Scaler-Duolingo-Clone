@@ -89,11 +89,22 @@ export const demoLesson = {
   order: 2,
   challenges: [
     {
+      id: 2000,
+      lessonId: 1002,
+      type: "TYPE",
+      question: "Type the answer: I am happy",
+      answer: "I am happy",
+      order: 1,
+      completed: false,
+      challengeOptions: [],
+    },
+    {
       id: 2001,
       lessonId: 1002,
       type: "SELECT",
       question: "Select the Spanish word for apple",
-      order: 1,
+      answer: "manzana",
+      order: 2,
       completed: false,
       challengeOptions: [
         {
@@ -114,35 +125,10 @@ export const demoLesson = {
         },
       ],
     },
-    {
-      id: 2002,
-      lessonId: 1002,
-      type: "ASSIST",
-      question: "Translate: good morning",
-      order: 2,
-      completed: false,
-      challengeOptions: [
-        {
-          id: 3003,
-          challengeId: 2002,
-          text: "buenos días",
-          correct: true,
-          imageSrc: null,
-          audioSrc: "/es_boy.mp3",
-        },
-        {
-          id: 3004,
-          challengeId: 2002,
-          text: "buenas noches",
-          correct: false,
-          imageSrc: null,
-          audioSrc: "/es_girl.mp3",
-        },
-      ],
-    },
   ],
-} as typeof lessons.$inferSelect & {
+} as unknown as typeof lessons.$inferSelect & {
   challenges: (typeof challenges.$inferSelect & {
+    answer?: string;
     completed: boolean;
     challengeOptions: (typeof challengeOptions.$inferSelect)[];
   })[];

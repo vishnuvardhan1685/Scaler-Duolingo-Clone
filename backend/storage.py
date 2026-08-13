@@ -154,11 +154,10 @@ def seed_db(cursor: sqlite3.Cursor) -> None:
     cursor.executemany("INSERT INTO lessons (id, unit_id, title, lesson_order) VALUES (?, ?, ?, ?)", lessons)
 
     exercises = [
-        (2001, 1002, 1, "SELECT", "Select the Spanish word for apple", "manzana"),
-        (2002, 1002, 2, "ASSIST", "Translate: good morning", "buenos días"),
-        (2003, 1002, 3, "MATCH", "Match the pair", "cat = gato"),
+        (2001, 1002, 1, "TYPE", "Type the answer: I am happy", "I am happy"),
+        (2002, 1002, 2, "SELECT", "Select the Spanish word for apple", "manzana"),
+        (2003, 1002, 3, "ASSIST", "Translate: good morning", "buenos días"),
         (2004, 1002, 4, "BLANK", "Fill in the blank", "Yo soy"),
-        (2005, 1002, 5, "TYPE", "Type the answer: I am happy", "Estoy feliz"),
     ]
     cursor.executemany(
         "INSERT INTO exercises (id, lesson_id, exercise_order, type, prompt, answer) VALUES (?, ?, ?, ?, ?, ?)",

@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Pencil, Flame, Zap, Shield, Trophy, Search, UserPlus, ChevronRight } from "lucide-react";
+import { Pencil, Flame, Zap, Shield, Trophy } from "lucide-react";
 
 import { FeedWrapper } from "@/components/feed-wrapper";
 import { UserProgress } from "@/components/user-progress";
 import { StickyWrapper } from "@/components/sticky-wrapper";
 import { getUserProgress, getUserSubscription } from "@/db/queries";
+import { ProfileSidebarTabs } from "./profile-client";
 
 const ProfilePage = async () => {
   const userProgress = await getUserProgress();
@@ -25,57 +26,18 @@ const ProfilePage = async () => {
           />
         )}
 
-        {/* FOLLOWING / FOLLOWERS Tabs Card matching Photo 4 */}
-        <div className="border-2 border-[#202f36] bg-[#18262d] rounded-3xl p-5 space-y-4 shadow-xl">
-          <div className="flex items-center border-b-2 border-[#202f36] text-xs font-black uppercase tracking-wider text-[#8496a0]">
-            <button className="pb-3 text-[#1cb0f6] border-b-2 border-[#1cb0f6] flex-1 text-center font-extrabold">
-              FOLLOWING
-            </button>
-            <button className="pb-3 hover:text-white flex-1 text-center font-bold">
-              FOLLOWERS
-            </button>
-          </div>
-          <div className="py-4 text-center space-y-3">
-            <div className="relative w-full h-32 mx-auto">
-              <Image src="/hero.svg" alt="Friends Characters" fill className="object-contain" />
-            </div>
-            <p className="text-white text-sm font-bold leading-snug px-2">
-              Learning is more fun and effective when you connect with others.
-            </p>
-          </div>
-        </div>
-
-        {/* Add Friends Card matching Photo 4 */}
-        <div className="border-2 border-[#202f36] bg-[#18262d] rounded-3xl p-5 space-y-3 shadow-xl mt-6">
-          <h3 className="font-extrabold text-base text-white">Add friends</h3>
-          <div className="space-y-2 pt-1">
-            <button className="w-full flex items-center justify-between p-3 rounded-2xl bg-[#131f24] border border-[#202f36] hover:bg-[#202f36] transition text-white text-sm font-extrabold">
-              <div className="flex items-center gap-x-3">
-                <Search className="h-5 w-5 text-[#1cb0f6]" />
-                <span>Find friends</span>
-              </div>
-              <ChevronRight className="h-5 w-5 text-[#8496a0]" />
-            </button>
-            <button className="w-full flex items-center justify-between p-3 rounded-2xl bg-[#131f24] border border-[#202f36] hover:bg-[#202f36] transition text-white text-sm font-extrabold">
-              <div className="flex items-center gap-x-3">
-                <UserPlus className="h-5 w-5 text-[#58cc02]" />
-                <span>Invite friends</span>
-              </div>
-              <ChevronRight className="h-5 w-5 text-[#8496a0]" />
-            </button>
-          </div>
-        </div>
+        <ProfileSidebarTabs />
 
         {/* Footer links */}
         <div className="flex flex-wrap justify-center gap-x-3 gap-y-1.5 text-[11px] font-bold uppercase tracking-wider text-[#52656d] px-2 text-center pt-6">
-          <Link href="/about" className="hover:text-white transition">ABOUT</Link>
-          <Link href="/blog" className="hover:text-white transition">BLOG</Link>
-          <Link href="/store" className="hover:text-white transition">STORE</Link>
-          <Link href="/efficacy" className="hover:text-white transition">EFFICACY</Link>
-          <Link href="/careers" className="hover:text-white transition">CAREERS</Link>
-          <Link href="/investors" className="hover:text-white transition">INVESTORS</Link>
-          <Link href="/terms" className="hover:text-white transition">TERMS</Link>
-          <Link href="/privacy" className="hover:text-white transition">PRIVACY</Link>
+          <Link href="/learn" className="hover:text-white transition">ABOUT</Link>
+          <Link href="/learn" className="hover:text-white transition">BLOG</Link>
+          <Link href="/shop" className="hover:text-white transition">STORE</Link>
+          <Link href="/learn" className="hover:text-white transition">EFFICACY</Link>
+          <Link href="/learn" className="hover:text-white transition">CAREERS</Link>
+          <Link href="/learn" className="hover:text-white transition">INVESTORS</Link>
+          <Link href="/settings" className="hover:text-white transition">TERMS</Link>
+          <Link href="/settings" className="hover:text-white transition">PRIVACY</Link>
         </div>
       </StickyWrapper>
 

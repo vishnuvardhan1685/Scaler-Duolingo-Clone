@@ -8,6 +8,7 @@ import { InfinityIcon, Plus, Check } from "lucide-react";
 import { courses } from "@/db/schema";
 import { Button } from "@/components/ui/button";
 import { useLanguageStore, LANGUAGES } from "@/store/use-language-store";
+import { useProgressStore } from "@/store/use-progress-store";
 
 type Props = {
   activeCourse: typeof courses.$inferSelect;
@@ -23,6 +24,7 @@ export const UserProgress = ({
   hasActiveSubscription
 }: Props) => {
   const { currentLanguage, setLanguage } = useLanguageStore();
+  const { xp } = useProgressStore();
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   return (
@@ -92,7 +94,7 @@ export const UserProgress = ({
       <Link href="/shop">
         <Button variant="ghost" className="text-[#1cb0f6] hover:bg-[#202f36] font-bold text-sm px-2 gap-x-2">
           <Image src="/points.svg" height={22} width={22} alt="Gems" className="hue-rotate-180" />
-          <span>{points || 150}</span>
+          <span>{xp || points || 150}</span>
         </Button>
       </Link>
       <Link href="/shop">

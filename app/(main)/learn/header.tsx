@@ -16,7 +16,7 @@ export const Header = ({ title }: Props) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="sticky top-0 bg-[#131f24] pb-3 lg:pt-[28px] lg:mt-[-28px] flex items-center justify-between border-b-2 border-[#202f36] mb-5 text-[#8496a0] lg:z-50">
+    <div className="sticky top-0 bg-[#131f24] pb-3 lg:pt-[28px] lg:mt-[2px] flex items-center justify-between border-b-2 border-[#202f36] mb-5 text-[#8496a0] lg:z-50">
       <Link href="/courses">
         <Button variant="ghost" size="sm" className="hover:bg-[#202f36] p-2">
           <ArrowLeft className="h-5 w-5 stroke-[2.5] text-[#8496a0]" />
