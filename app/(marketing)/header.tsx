@@ -17,12 +17,11 @@ export const Header = () => {
     Boolean(process.env.CLERK_SECRET_KEY);
 
   return (
-    <header className="h-20 w-full border-b-2 border-slate-200 px-4">
+    <header className="h-20 w-full border-b-2 border-[#202f36] bg-[#131f24] px-4">
       <div className="lg:max-w-screen-lg mx-auto flex items-center justify-between h-full">
-        <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
-          <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
-          <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
-            Lingo
+        <div className="pt-4 pl-4 pb-4 flex items-center gap-x-3">
+          <h1 className="text-3xl font-black text-[#58cc02] tracking-tighter lowercase">
+            duolingo
           </h1>
         </div>
         {clerkConfigured ? (

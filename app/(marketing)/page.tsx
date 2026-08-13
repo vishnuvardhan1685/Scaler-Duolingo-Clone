@@ -22,8 +22,8 @@ export default function Home() {
         <Image src="/hero.svg" fill alt="Hero" />
       </div>
       <div className="flex flex-col items-center gap-y-8">
-        <h1 className="text-xl lg:text-3xl font-bold text-neutral-600 max-w-[480px] text-center">
-          Learn, practice, and master new languages with Lingo.
+        <h1 className="text-xl lg:text-3xl font-black text-white max-w-[480px] text-center leading-snug">
+          The free, fun, and effective way to learn a language!
         </h1>
         <div className="flex flex-col items-center gap-y-3 max-w-[330px] w-full">
           {clerkConfigured ? (

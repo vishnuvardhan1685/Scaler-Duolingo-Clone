@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ExitModal } from "@/components/modals/exit-modal";
 import { HeartsModal } from "@/components/modals/hearts-modal";
 import { PracticeModal } from "@/components/modals/practice-modal";
+import { GuidebookModal } from "@/components/modals/guidebook-modal";
 import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 
@@ -32,6 +33,7 @@ export default function RootLayout({
           <ExitModal />
           <HeartsModal />
           <PracticeModal />
+          <GuidebookModal />
           {children}
           <Analytics />
         </body>

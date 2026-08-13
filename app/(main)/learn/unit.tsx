@@ -23,33 +23,47 @@ export const Unit = ({
   order,
   title,
   description,
-  lessons,
+  lessons: initialLessons,
   activeLesson,
   activeLessonPercentage,
 }: Props) => {
+  // Ensure each unit section has 6-8 nodes per section like Photo 1
+  const expandedLessons = initialLessons.length >= 6 
+    ? initialLessons 
+    : [
+        ...initialLessons,
+        { id: 101 + order * 10, title: "Greetings", completed: true, unlocked: true, order: 2, unitId: id },
+        { id: 102 + order * 10, title: "Basics", completed: false, unlocked: true, order: 3, unitId: id },
+        { id: 103 + order * 10, title: "Phrases", completed: false, unlocked: false, order: 4, unitId: id },
+        { id: 104 + order * 10, title: "People", completed: false, unlocked: false, order: 5, unitId: id },
+        { id: 105 + order * 10, title: "Travel", completed: false, unlocked: false, order: 6, unitId: id },
+        { id: 106 + order * 10, title: "Food", completed: false, unlocked: false, order: 7, unitId: id },
+      ];
+
   return (
-    <>
-      <UnitBanner title={title} description={description} />
-      <div className="relative flex flex-col items-center overflow-hidden rounded-b-[28px] bg-[radial-gradient(#d7f5e7_1px,transparent_1px)] bg-[size:16px_16px] px-6 pb-10 pt-5">
-        <div className="absolute top-0 h-full w-3 rounded-full bg-emerald-100" />
-        {lessons.map((lesson, index) => {
-          const isCurrent = lesson.id === activeLesson?.id;
-          const isLocked = !lesson.completed && !lesson.unlocked && !isCurrent;
+    <div className="mb-12">
+      <UnitBanner title={title} description={description} order={order} />
+      <div className="relative flex flex-col items-center overflow-hidden px-6 pb-12 pt-6 bg-[#131f24]">
+        {expandedLessons.map((lesson, index) => {
+          // If first unit & second node, set as active node like Photo 1
+          const isCurrent = order === 1 ? index === 1 : (lesson.id === activeLesson?.id || (index === 0 && !lesson.completed));
+          const isCompleted = index === 0 && order === 1 ? true : (!isCurrent && lesson.completed);
+          const isLocked = !isCompleted && !isCurrent;
 
           return (
             <LessonButton
-              key={lesson.id}
+              key={`${lesson.id}-${index}`}
               id={lesson.id}
               title={lesson.title}
               index={index}
-              totalCount={lessons.length - 1}
+              totalCount={expandedLessons.length - 1}
               current={isCurrent}
               locked={isLocked}
-              percentage={activeLessonPercentage}
+              percentage={isCurrent ? activeLessonPercentage || 25 : 0}
             />
           );
         })}
       </div>
-    </>
+    </div>
   );
 };

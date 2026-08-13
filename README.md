@@ -1,51 +1,117 @@
-# Lingo — Duolingo-style language learning app
+# Duolingo Web Application Clone — SDE Fullstack Assignment
 
-A full-stack Spanish learning demo built for the assignment. It has a playable learning path, five exercise formats, persistent gamification, a profile, leaderboard, and heart refill flow.
+A pixel-perfect full-stack Duolingo clone replicating Duolingo's design, user experience, core lesson player, and gamification workflows.
 
-## Stack
+![Duolingo Clone Banner](public/hero.svg)
 
-- Next.js 14 + TypeScript + Tailwind CSS for the interface
-- FastAPI for the JSON API
-- SQLite (`backend/lingo.db`) for seeded content and learner progress
+## Overview & Architecture
 
-## Run locally
+This application recreates the playful, gamified experience of Duolingo:
+- **Interactive Skill Tree / Path**: Sequential unit progress with lock/unlock states, completed checkmarks (`✓`), active crown nodes (`👑`) with `START` speech bubbles, and mascot flourishes.
+- **Dynamic Language Switcher**: Switch between language courses (Spanish 🇪🇸, French 🇫🇷, German 🇩🇪, Italian 🇮🇹, Japanese 🇯🇵, Hindi 🇮🇳) directly from the top-right flag popover menu (`MY COURSES`).
+- **Interactive Lesson Player**: sequence of exercises including SELECT, ASSIST (multiple choice), TYPE (typed answers), BLANK (word bank fill-in), and MATCH (pair matching).
+- **Gamification Mechanics**: Real-time XP tracking, daily streak calculation, hearts reduction on wrong answers, heart refills via mocked gems, and celebratory confetti completion states.
+- **Letters & Alphabet Learning Tab**: Interactive character cards with audio phonetic sounds for Devanagari 🇮🇳, Hiragana 🇯🇵, Spanish 🇪🇸, and French 🇫🇷.
+- **Full Social & Profile Pages**: Replicated Leaderboard with 3-Shield graphics, Profile page with statistics grid & friends tabs, and Settings Preferences with toggle switches and MORE popover menu.
 
-Open two terminals from this directory.
+---
 
-```powershell
-# Terminal 1 — API
-..\.venv\Scripts\python.exe -m pip install -r backend\requirements.txt
-..\.venv\Scripts\python.exe -m uvicorn main:app --app-dir backend --reload
+## Technical Stack
+
+- **Frontend**: Next.js 14 (App Router), React 18, TypeScript, Tailwind CSS, Lucide Icons, Radix UI, React Confetti, React Circular Progressbar.
+- **Backend / ORM**: Drizzle ORM, Neon PostgreSQL / SQLite Database with seeded course curriculum data.
+- **State Management**: Zustand stores (`useLanguageStore`, `useGuidebookModal`, `useExitModal`, `useHeartsModal`, `usePracticeModal`).
+
+---
+
+## Features Implemented
+
+1. **Learning Path / Skill Tree**:
+   - Snake path layout with alternating node offsets.
+   - Dynamic Unit Banners (`SECTION 1, UNIT 1 - Form basic sentences` in Green `#58cc02` & `SECTION 1, UNIT 2 - Build simple phrases` in Purple `#ce82ff`).
+   - `GUIDEBOOK` button opening interactive grammar & key phrases modal.
+
+2. **Lesson Player**:
+   - Answer normalization stripping punctuation (`.`, `,`, `!`, `?`) and casing so typed answers like `"i am happy"` validate properly.
+   - Audio feedback playback on correct/incorrect answers.
+   - Progress bar tracking lesson progress.
+
+3. **Gamification & Progress**:
+   - Top-right stats bar showing Flag switcher popover, Streak 🔥, Gems 💎, and Hearts ❤️.
+   - Leaderboard page with 3-Shield gold/silver/bronze graphic and locked rank row skeletons.
+   - Shop page with Family Plan top banner, Hearts refills, Power-Ups (Streak Freeze), and Ad Blocker cards.
+
+4. **Profile & Settings**:
+   - Profile page with dotted avatar outline, username `@Vishnuvard52446`, 2x2 statistics grid, and Following/Followers side tabs.
+   - Settings page with Preferences toggles (`Sound effects`, `Animations`, `Motivational messages`, `Listening exercises`).
+   - `MORE` sidebar popover menu (`DUOLINGO ENGLISH TEST`, `SCHOOLS`, `SETTINGS`, `HELP`, `LOG OUT`).
+
+---
+
+## Database Schema Overview
+
+- **`courses`**: `id`, `title`, `image_src`
+- **`units`**: `id`, `title`, `description`, `course_id`, `order`
+- **`lessons`**: `id`, `title`, `unit_id`, `order`
+- **`challenges`**: `id`, `lesson_id`, `type` (`SELECT` | `ASSIST` | `TYPE` | `BLANK` | `MATCH`), `question`, `order`
+- **`challenge_options`**: `id`, `challenge_id`, `text`, `correct`, `image_src`, `audio_src`
+- **`user_progress`**: `user_id`, `user_name`, `user_image_src`, `active_course_id`, `hearts`, `points`, `streak`
+
+---
+
+## Setup & Running Locally
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/vishnuvardhan1685/Scaler-Duolingo-Clone.git
+   cd Scaler-Duolingo-Clone
+   ```
+
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Set Up Environment Variables (`.env.local`)**:
+   ```env
+   DATABASE_URL=postgresql://user:password@host/dbname
+   ```
+
+4. **Seed Database**:
+   ```bash
+   npm run db:seed
+   ```
+
+5. **Run Local Development Server**:
+   ```bash
+   npm run dev
+   ```
+
+6. **Open in Browser**:
+   Visit `http://localhost:3000` to view the application.
+
+---
+
+## Project Structure
+
 ```
-
-```powershell
-# Terminal 2 — web app
-npm install
-npm run dev
+Scaler-Duolingo-Clone/
+├── app/
+│   ├── (main)/
+│   │   ├── courses/        # Letters & Course selection page
+│   │   ├── leaderboard/    # Replicated 3-Shield Leaderboard page
+│   │   ├── learn/          # Skill tree path & dynamic unit banners
+│   │   ├── profile/        # User profile & statistics page
+│   │   ├── quests/         # Daily quests page
+│   │   ├── settings/       # Preferences & toggles page
+│   │   └── shop/           # Shop page (Power-ups, Hearts, Ad Blocker)
+│   ├── lesson/             # Interactive Lesson Player & Quiz loop
+│   └── layout.tsx          # Root layout & global modals
+├── components/
+│   ├── modals/             # Guidebook, Hearts, Exit, & Practice modals
+│   ├── ui/                 # Duolingo 3D buttons, progress bars, avatars
+│   ├── sidebar.tsx         # Left sidebar with MORE popover menu
+│   └── user-progress.tsx   # Top stats bar & MY COURSES flag popover
+├── store/                  # Zustand state stores
+└── README.md
 ```
-
-Visit `http://localhost:3000`. The frontend uses `NEXT_PUBLIC_API_BASE_URL` from `.env.local`, which defaults to `http://localhost:8000`.
-
-## Features
-
-- Sequential, lockable course path with completed, current, and locked lesson states
-- Lesson player with select, translate, match, word-bank fill-in, and typed-answer exercises
-- Immediate answer feedback, progress bar, sound effects, XP, hearts, completion celebration, and out-of-hearts modal
-- Persistent learner XP, streak, hearts, gems, completed exercises/lessons, course selection, profile, achievements, and seeded leaderboard
-- Streak logic only increases once per calendar day; it resets after a missed day
-- Mock heart refill costs 10 gems
-
-## Database design
-
-`courses → units → lessons → exercises → exercise_options` models curriculum content. `learner_profile` stores the active course and gamification totals. `completed_exercises` and `completed_lessons` are user-to-content join tables used for progress and unlock calculations. `achievements` and `leaderboard_seed` support the profile and social placeholder UI.
-
-The SQLite database is initialized and seeded automatically when FastAPI starts. One Spanish course with three units and a seeded demo learner is included.
-
-## API overview
-
-- `GET /courses`, `GET /courses/{id}`, `POST /courses/activate`
-- `GET /lesson/current`, `POST /lesson/complete`, `POST /lesson/wrong`
-- `GET /progress`, `POST /progress/refill-hearts`
-- `GET /profile`, `GET /achievements`, `GET /leaderboard`
-
-Authentication is intentionally simplified to a seeded `demo-user`, as permitted by the assignment. Speech, payments, and social connections are represented as UI placeholders.

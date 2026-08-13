@@ -9,18 +9,11 @@ import { getUserProgress, getUserSubscription } from "@/db/queries";
 
 import { Items } from "./items";
 import { Quests } from "@/components/quests";
+import { Button } from "@/components/ui/button";
 
 const ShopPage = async () => {
-  const userProgressData = getUserProgress();
-  const userSubscriptionData = getUserSubscription();
-
-  const [
-    userProgress,
-    userSubscription,
-  ] = await Promise.all([
-    userProgressData,
-    userSubscriptionData
-  ]);
+  const userProgress = await getUserProgress();
+  const userSubscription = await getUserSubscription();
 
   if (!userProgress || !userProgress.activeCourse) {
     redirect("/courses");
@@ -40,22 +33,30 @@ const ShopPage = async () => {
         {!isPro && (
           <Promo />
         )}
+
+        {/* Using an ad blocker? Card matching Photo 3 */}
+        <div className="rounded-3xl bg-gradient-to-b from-[#18313d] via-[#1d1b4b] to-[#4a1d6d] border-2 border-[#202f36] p-6 text-white text-center space-y-4 shadow-2xl relative overflow-hidden mt-6">
+          <div className="relative w-28 h-24 mx-auto">
+            <Image src="/mascot.svg" alt="Super Owl Mascot" fill className="object-contain filter drop-shadow-lg" />
+          </div>
+          <h3 className="text-xl font-black tracking-tight">Using an ad blocker?</h3>
+          <p className="text-xs text-[#8496a0] font-semibold leading-relaxed px-2">
+            Support education with Super Duolingo and we&apos;ll remove ads for you
+          </p>
+          <div className="space-y-2 pt-2">
+            <Button className="w-full bg-white text-black font-black uppercase text-xs tracking-wider rounded-2xl py-3 hover:bg-slate-200">
+              TRY SUPER FOR FREE
+            </Button>
+            <button className="text-xs font-black uppercase tracking-wider text-[#ce82ff] hover:underline pt-1 w-full">
+              DISABLE AD BLOCKER
+            </button>
+          </div>
+        </div>
+
         <Quests points={userProgress.points} />
       </StickyWrapper>
       <FeedWrapper>
         <div className="w-full flex flex-col items-center">
-          <Image
-            src="/shop.svg"
-            alt="Shop"
-            height={90}
-            width={90}
-          />
-          <h1 className="text-center font-bold text-neutral-800 text-2xl my-6">
-            Shop
-          </h1>
-          <p className="text-muted-foreground text-center text-lg mb-6">
-            Spend your points on cool stuff.
-          </p>
           <Items
             hearts={userProgress.hearts}
             points={userProgress.points}

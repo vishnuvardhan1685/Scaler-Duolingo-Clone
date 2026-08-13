@@ -45,13 +45,13 @@ export const Card = ({
     <div
       onClick={handleClick}
       className={cn(
-        "h-full border-2 rounded-xl border-b-4 hover:bg-black/5 p-4 lg:p-6 cursor-pointer active:border-b-2",
-        selected && "border-sky-300 bg-sky-100 hover:bg-sky-100",
+        "h-full border-2 border-[#202f36] bg-[#18262d] text-white rounded-2xl border-b-4 hover:bg-[#202f36] p-4 lg:p-6 cursor-pointer active:border-b-2 transition-all",
+        selected && "border-[#1899d6] bg-[#18313d] text-[#1cb0f6]",
         selected && status === "correct" 
-          && "border-green-300 bg-green-100 hover:bg-green-100",
+          && "border-[#46a302] bg-[#132d18] text-[#58cc02]",
         selected && status === "wrong" 
-          && "border-rose-300 bg-rose-100 hover:bg-rose-100",
-        disabled && "pointer-events-none hover:bg-white",
+          && "border-[#ea2b2b] bg-[#2d1818] text-[#ff4b4b]",
+        disabled && "pointer-events-none opacity-50",
         type === "ASSIST" && "lg:p-3 w-full"
       )}
     >
@@ -60,7 +60,7 @@ export const Card = ({
         <div
           className="relative aspect-square mb-4 max-h-[80px] lg:max-h-[150px] w-full"
         >
-          <Image src={imageSrc} fill alt={text} />
+          <Image src={imageSrc} fill alt={text} className="object-contain" />
         </div>
       )}
       <div className={cn(
@@ -69,22 +69,22 @@ export const Card = ({
       )}>
         {type === "ASSIST" && <div />}
         <p className={cn(
-          "text-neutral-600 text-sm lg:text-base",
-          selected && "text-sky-500",
+          "text-white text-sm lg:text-base font-bold",
+          selected && "text-[#1cb0f6]",
           selected && status === "correct" 
-            && "text-green-500",
+            && "text-[#58cc02]",
           selected && status === "wrong" 
-            && "text-rose-500",
+            && "text-[#ff4b4b]",
         )}>
           {text}
         </p>
         <div className={cn(
-          "lg:w-[30px] lg:h-[30px] w-[20px] h-[20px] border-2 flex items-center justify-center rounded-lg text-neutral-400 lg:text-[15px] text-xs font-semibold",
-          selected && "border-sky-300 text-sky-500",
+          "lg:w-[30px] lg:h-[30px] w-[20px] h-[20px] border-2 border-[#202f36] flex items-center justify-center rounded-lg text-[#8496a0] lg:text-[15px] text-xs font-bold",
+          selected && "border-[#1899d6] text-[#1cb0f6] bg-[#18313d]",
           selected && status === "correct" 
-            && "border-green-500 text-green-500",
+            && "border-[#46a302] text-[#58cc02] bg-[#132d18]",
           selected && status === "wrong" 
-            && "border-rose-500 text-rose-500",
+            && "border-[#ea2b2b] text-[#ff4b4b] bg-[#2d1818]",
         )}>
           {shortcut}
         </div>

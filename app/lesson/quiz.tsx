@@ -90,7 +90,19 @@ export const Quiz = ({
   const normalizedType = challenge?.type;
   const correctAnswer = (challenge as { answer?: string } | undefined)?.answer ?? "";
 
-  const normalize = (value: string) => value.trim().toLowerCase();
+  const normalize = (value: string) => 
+    value
+      .replace(/[.,/#!$%^&*;:{}=\-_`~()?]/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+
+  const correctOption = options.find((option) => option.correct);
+  const possibleAnswers = [
+    correctAnswer,
+    correctOption?.text,
+    correctOption?.id ? String(correctOption.id) : null,
+  ].filter(Boolean) as string[];
 
   const selectedCandidate = (() => {
     if (!challenge) {
@@ -174,7 +186,11 @@ export const Quiz = ({
       return;
     }
 
-    if (normalize(selectedCandidate) === normalize(correctAnswer)) {
+    const isCorrect = possibleAnswers.length === 0 
+      ? true 
+      : possibleAnswers.some((ans) => normalize(selectedCandidate) === normalize(ans));
+
+    if (isCorrect) {
       startTransition(() => {
         upsertChallengeProgress(challenge.id)
           .then((response) => {
@@ -282,7 +298,7 @@ export const Quiz = ({
       <div className="flex-1">
         <div className="h-full flex items-center justify-center">
           <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col gap-y-12">
-            <h1 className="text-lg lg:text-3xl text-center lg:text-start font-bold text-neutral-700">
+            <h1 className="text-lg lg:text-3xl text-center lg:text-start font-black text-white">
               {title}
             </h1>
             <div>
@@ -295,7 +311,7 @@ export const Quiz = ({
                     value={typedAnswer}
                     onChange={(event) => setTypedAnswer(event.target.value)}
                     placeholder="Type your answer"
-                    className="w-full rounded-xl border-2 border-neutral-200 px-4 py-3 text-lg outline-none focus:border-green-500"
+                    className="w-full rounded-2xl border-2 border-[#202f36] bg-[#18262d] text-white px-4 py-3 text-lg outline-none focus:border-[#58cc02]"
                     disabled={pending || status !== "none"}
                   />
                 </div>

@@ -22,19 +22,19 @@ export const Footer = ({
 
   return (
     <footer className={cn(
-      "lg:-h[140px] h-[100px] border-t-2",
-      status === "correct" && "border-transparent bg-green-100",
-      status === "wrong" && "border-transparent bg-rose-100",
+      "lg:h-[140px] h-[100px] border-t-2 border-[#202f36] bg-[#18262d]",
+      status === "correct" && "border-transparent bg-[#132d18]",
+      status === "wrong" && "border-transparent bg-[#2d1818]",
     )}>
       <div className="max-w-[1140px] h-full mx-auto flex items-center justify-between px-6 lg:px-10">
         {status === "correct" && (
-          <div className="text-green-500 font-bold text-base lg:text-2xl flex items-center">
+          <div className="text-[#58cc02] font-black text-base lg:text-2xl flex items-center">
             <CheckCircle className="h-6 w-6 lg:h-10 lg:w-10 mr-4" />
             Nicely done!
           </div>
         )}
         {status === "wrong" && (
-          <div className="text-rose-500 font-bold text-base lg:text-2xl flex items-center">
+          <div className="text-[#ff4b4b] font-black text-base lg:text-2xl flex items-center">
             <XCircle className="h-6 w-6 lg:h-10 lg:w-10 mr-4" />
             Try again.
           </div>
@@ -50,7 +50,7 @@ export const Footer = ({
         )}
         <Button
           disabled={disabled}
-          className="ml-auto"
+          className="ml-auto min-w-[150px] font-extrabold uppercase"
           onClick={onCheck}
           size={isMobile ? "sm" : "lg"}
           variant={status === "wrong" ? "danger" : "secondary"}

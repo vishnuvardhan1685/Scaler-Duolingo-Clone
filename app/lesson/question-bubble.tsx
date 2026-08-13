@@ -21,10 +21,10 @@ export const QuestionBubble = ({ question }: Props) => {
         width={40}
         className="block lg:hidden"
       />
-      <div className="relative py-2 px-4 border-2 rounded-xl text-sm lg:text-base">
+      <div className="relative py-3 px-5 border-2 border-[#202f36] bg-[#18262d] text-white rounded-2xl text-sm lg:text-base font-extrabold shadow-sm">
         {question}
         <div
-          className="absolute -left-3 top-1/2 w-0 h-0 border-x-8 border-x-transparent border-t-8 transform -translate-y-1/2 rotate-90"
+          className="absolute -left-3 top-1/2 w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-[#202f36] transform -translate-y-1/2 -rotate-90"
         />
       </div>
     </div>
